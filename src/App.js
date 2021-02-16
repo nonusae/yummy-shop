@@ -1,8 +1,10 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
+import { NavBar } from './NavBar/NavBar';
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Open Sans', sans-serif;
+    margin: 0;
   }
 
   h1, h2, h3 {
@@ -13,8 +15,8 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <>
-      <h1>My Shop</h1>
       <GlobalStyle />
+      <NavBar />
       <div>Hello</div>
     </>
   );
