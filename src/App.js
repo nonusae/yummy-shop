@@ -4,19 +4,22 @@ import { Banner } from './Banner/Banner';
 import { Menu } from './Menu/Menu'
 import { FoodDialog } from './FoodDialog/FoodDialog'
 import { GlobalStyle } from './styles/GlobalStyle';
-import { Order } from './Order/Order'
+import { Order } from './Order/Order';
+import { useOpenFood } from './Hooks/useOpenFood';
+import { useOrders } from './Hooks/useOrders';
 
 function App() {
-  const [openFood, setOpenFood] = useState();
+  const openFood = useOpenFood();
+  const orders = useOrders();
 
   return (
     <>
       <GlobalStyle />
-      <FoodDialog openFood={openFood} setOpenFood={setOpenFood}/>
+      <FoodDialog {...openFood} {...orders} />
       <NavBar />
-      <Order />
+      <Order {...orders} />
       <Banner />
-      <Menu setOpenFood={setOpenFood} />
+      <Menu {...openFood} />
     </>
   );
 }

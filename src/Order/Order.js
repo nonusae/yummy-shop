@@ -27,10 +27,13 @@ const Checkoutbutton = styled(Button)`
   /* width: 100%; */
 `;
 
-export function Order() {
+export function Order({orders}) {
   return <OrderStyled>
     <OrderContent>
-      Your're order is empty.
+      {orders.length === 0
+        ? "Your're order is empty."
+        : `Found ${orders.length} orders`
+      }
     </OrderContent>
     <DialogFooter>
       <Checkoutbutton>Checkout</Checkoutbutton>
