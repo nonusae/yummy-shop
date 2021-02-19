@@ -4,6 +4,7 @@ import { FoodLabel } from '../Menu/FoodGrid';
 import { brandPrimary } from '../styles/colors'
 import { Title } from '../styles/title';
 import { Button } from '../Button/Button';
+import { formatPrice } from '../Data/FoodData';
 
 // TODO: Refactor
 const Dialog = styled.div`
@@ -73,7 +74,7 @@ export function FoodDialog({ openFood, setOpenFood, setOrders, orders }){
   if(!openFood) return null;
 
   const order = {
-    name: openFood.name
+    ...openFood
   }
 
   function addToOrder() {
@@ -91,7 +92,7 @@ export function FoodDialog({ openFood, setOpenFood, setOrders, orders }){
         </DialogContent>
         <DialogFooter>
           <Button onClick={addToOrder}>
-            Add to order
+            Add to order: {formatPrice(openFood.price)}
           </Button>
         </DialogFooter>
       </Dialog>
