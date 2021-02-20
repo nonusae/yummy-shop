@@ -20,9 +20,10 @@ const IncrementButton = styled.div`
   width: 23px;
   color: ${brandPrimary};
   font-size: 1.25rem;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
-  line-height: 23px;
   margin: 0px 10px;
   border: 1px solid #f44336;
   border: 1px solid ${brandPrimary};
