@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { DialogContent, DialogFooter } from '../FoodDialog/FoodDialog';
 import { Button } from '../Button/Button';
 import { formatPrice } from '../Data/FoodData';
+import { getPrice } from '../FoodDialog/FoodDialog';
 
 const OrderStyled = styled.div`
   position: fixed;
@@ -39,7 +40,6 @@ const Checkoutbutton = styled(Button)`
 `;
 
 export function Order({orders}) {
-  console.log(orders)
   return <OrderStyled>
     {orders.length === 0
       ? <OrderContent>Your're order is empty.</OrderContent>
@@ -48,10 +48,10 @@ export function Order({orders}) {
           {orders.map(order => (
             <OrderContainer>
               <OrderItem>
-                <div>1</div>
+                <div>{order.quantity}</div>
                 <div>{order.name}</div>
                 <div />
-                <div>{formatPrice(order.price)}</div>
+                <div>{formatPrice(getPrice(order))}</div>
               </OrderItem>
             </OrderContainer>
           ))}
