@@ -7,6 +7,8 @@ import { Button } from '../Button/Button';
 import { formatPrice } from '../Data/FoodData';
 import { QuantityInput } from './QuantityInput';
 import { useQuantity } from '../Hooks/useQuantity'
+import { Topping } from './Topping'
+import { useToppings }  from '../Hooks/useTopping';
 
 // TODO: Refactor
 const Dialog = styled.div`
@@ -24,7 +26,7 @@ const Dialog = styled.div`
 export const DialogContent = styled.div`
   overflow: auto;
   min-height: 100px;
-  padding: 0 40px;
+  padding: 0 40px 80px;
 `;
 
 export const DialogFooter = styled.div`
@@ -69,12 +71,19 @@ const DialogBannerName = styled(FoodLabel)`
   padding: 0.1em 1em;
 `;
 
-  export function getPrice(order){
-    return order.quantity * order.price
-  }
+const pricePerTopping = 0.5;
+
+export function getPrice(order){
+  return order.quantity * (order.price + (order.toppings.filter(t => t.checked).length * pricePerTopping) )
+}
+
+function hasTopping(food) {
+  return food.section === 'Pizza'
+}
 
 const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
-  const quantity = useQuantity(openFood && openFood.quantity)
+  const quantity = useQuantity(openFood && openFood.quantity);
+  const toppings = useToppings(openFood.toppings);
 
   function close() {
     setOpenFood();
@@ -82,7 +91,8 @@ const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
 
   const order = {
     ...openFood,
-    quantity: quantity.value
+    quantity: quantity.value,
+    toppings: toppings.toppings
   }
 
   function addToOrder() {
@@ -98,6 +108,10 @@ const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
         </DialogBanner>
         <DialogContent>
           <QuantityInput quantity={quantity}> </QuantityInput>
+          {hasTopping(openFood) && <>
+            <h3>Would you like some toppings ?</h3>
+            <Topping {...toppings}/>
+          </>}
         </DialogContent>
         <DialogFooter>
           <Button onClick={addToOrder}>

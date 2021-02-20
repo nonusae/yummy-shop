@@ -39,6 +39,11 @@ const Checkoutbutton = styled(Button)`
   padding: 0.7em 3em;
 `;
 
+const DetailItem = styled.div`
+  color: grey;
+  font-size: 0.75rem;
+`;
+
 export function Order({orders}) {
   const subtotal = orders.reduce((total, order) => {
     return total + getPrice(order)
@@ -59,6 +64,13 @@ export function Order({orders}) {
                 <div />
                 <div>{formatPrice(getPrice(order))}</div>
               </OrderItem>
+              <DetailItem>
+                {order.toppings
+                  .filter(t => t.checked)
+                  .map(topping => topping.name)
+                  .join(", ")
+                }
+              </DetailItem>
             </OrderContainer>
           ))}
           <OrderContainer>
