@@ -96,6 +96,7 @@ const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
   const quantity = useQuantity(openFood && openFood.quantity);
   const toppings = useToppings(openFood.toppings);
   const {selectedChoice, handleSelect} = useChoice();
+  const isEditing = openFood.index > -1;
 
   function close() {
     setOpenFood();
@@ -106,6 +107,13 @@ const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
     quantity: quantity.value,
     toppings: toppings.toppings,
     choice: selectedChoice
+  }
+
+  function editOrder() {
+    const newOrders = [...orders];
+    newOrders[openFood.index] = order;
+    setOrders(newOrders);
+    close()
   }
 
   function addToOrder() {
@@ -131,8 +139,12 @@ const FoodDialogContainer = ({ openFood, setOpenFood, setOrders, orders }) => {
           }
         </DialogContent>
         <DialogFooter>
-          <ConfirmButton onClick={addToOrder} disabled={openFood.choices && !selectedChoice}>
-            Add to order: {formatPrice(getPrice(order))}
+          <ConfirmButton onClick={isEditing ? editOrder : addToOrder} disabled={openFood.choices && !selectedChoice}>
+            {isEditing
+              ? `Update order: `
+              : `Add to order: `
+            }
+            {formatPrice(getPrice(order))}
           </ConfirmButton>
         </DialogFooter>
       </Dialog>
